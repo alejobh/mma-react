@@ -32,9 +32,9 @@ function Signup() {
     const payload = {
       email: formData.email,
       password: formData.password,
-      password_confirmation: formData.passwordConfirmation,
-      first_name: formData.name,
-      last_name: formData.lastName,
+      passwordConfirmation: formData.passwordConfirmation,
+      firstName: formData.name,
+      lastName: formData.lastName,
       locale: 'en'
     };
     signUpCallback(payload);
@@ -57,7 +57,7 @@ function Signup() {
             <p>{i18next.t('Signup:passwordConfirmation')}</p>
             <input name="passwordConfirmation" type="password" ref={register} />
             <button className="btn" type="submit">
-              {submitting ? 'Espere...' : i18next.t('common:signup')}
+              {i18next.t('common:signup')}
             </button>
             {submitError &&
               <span className={`text-error ${styles.submitError}`}>{i18next.t('Signup:submitError')}</span>

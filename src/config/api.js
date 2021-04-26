@@ -1,4 +1,5 @@
 import { create } from 'apisauce';
+import { SnakecaseSerializer } from 'cerealizr';
 
 const baseURL = 'https://books-training-rails.herokuapp.com/api/v1';
 
@@ -36,5 +37,11 @@ export const apiSetup = dispatch => {
     }
   });
 };
+
+const snakeCase = new SnakecaseSerializer();
+
+api.addRequestTransform(request => {
+  request.data = snakeCase.serialize(request.data);
+});
 
 export default api;
