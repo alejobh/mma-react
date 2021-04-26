@@ -3,11 +3,13 @@ import i18next from 'i18next';
 import { useForm } from 'react-hook-form';
 
 import logo from 'assets/logo.png';
+import Input from 'components/Input';
+import { requiredValidation } from 'utils/inputValidations';
 
 import styles from './styles.module.scss';
 
-type SignUpValues = {
-  name: string;
+interface SignUpValues {
+  firstName: string;
   lastName: string;
   email: string;
   password: string;
@@ -15,14 +17,14 @@ type SignUpValues = {
 };
 
 function Signup() {
-  const { register, handleSubmit } = useForm<SignUpValues>();
+  const { register, formState: { errors }, handleSubmit } = useForm<SignUpValues>();
 
   const onSubmit = (data: SignUpValues) => {
     console.log({
       email: data.email,
       password: data.password,
       password_confirmation: data.passwordConfirmation,
-      first_name: data.name,
+      first_name: data.firstName,
       last_name: data.lastName,
       locale: 'en'
     });
@@ -34,16 +36,16 @@ function Signup() {
         <img src={logo} alt="Wolox logo" />
         <div className={`column center full-width ${styles.containerForm}`}>
           <form className={`column full-width ${styles.form}`} onSubmit={handleSubmit(onSubmit)}>
-            <p>{i18next.t('Signup:name')}</p>
-            <input name="name" ref={register} />
-            <p>{i18next.t('Signup:lastName')}</p>
-            <input name="lastName" ref={register} />
-            <p>{i18next.t('common:email')}</p>
-            <input name="email" ref={register} />
-            <p>{i18next.t('common:password')}</p>
-            <input name="password" type="password" ref={register} />
-            <p>{i18next.t('Signup:passwordConfirmation')}</p>
-            <input name="passwordConfirmation" type="password" ref={register} />
+            <p className={styles.field}>{i18next.t('Signup:name')}</p>
+            <Input name="firstName" error={errors.firstName?.message} register={register(requiredValidation)} />
+            <p className={styles.field}>{i18next.t('Signup:lastName')}</p>
+            <Input name="lastName" error={errors.lastName?.message} register={register(requiredValidation)} />
+            <p className={styles.field}>{i18next.t('common:email')}</p>
+            <Input name="email" error={errors.email?.message} register={register(requiredValidation)} />
+            <p className={styles.field}>{i18next.t('common:password')}</p>
+            <Input name="password" type="password" error={errors.password?.message} register={register(requiredValidation)} />
+            <p className={styles.field}>{i18next.t('Signup:passwordConfirmation')}</p>
+            <Input name="passwordConfirmation" type="password" error={errors.passwordConfirmation?.message} register={register(requiredValidation)} />
             <button className="btn" type="submit">
               {i18next.t('common:signup')}
             </button>
