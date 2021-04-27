@@ -31,17 +31,3 @@ input {
   border-radius: 5px;
   height: 32px;
 }
-
-.btn {
-  border-radius: 5px;
-  background-color: $wolox-green;
-  height: 32px;
-  color: $white;
-  width: 100%;
-
-  &.secondary {
-    border: 1px solid $wolox-green;
-    color: $wolox-green;
-    background-color: $wild-sand;
-  }
-}

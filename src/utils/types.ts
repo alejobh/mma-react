@@ -1,6 +1,6 @@
 export type Nullable<T> = T | null;
 
-export type SignUpValues = {
+export interface SignUpValues {
   name: string;
   lastName: string;
   email: string;

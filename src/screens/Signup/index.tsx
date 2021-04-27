@@ -6,6 +6,7 @@ import logo from 'assets/logo.png';
 import { useLazyRequest } from 'hooks/useRequest';
 import { SignUpValues } from 'utils/types';
 import { signUp } from 'services/userService';
+import Button from 'components/Button';
 
 import styles from './styles.module.scss';
 
@@ -56,16 +57,16 @@ function Signup() {
             <input name="password" type="password" ref={register} />
             <p>{i18next.t('Signup:passwordConfirmation')}</p>
             <input name="passwordConfirmation" type="password" ref={register} />
-            <button className="btn" type="submit">
+            <Button customClass="primary" loading={submitting} type="submit">
               {i18next.t('common:signup')}
-            </button>
+            </Button>
             {submitError &&
               <span className={`text-error ${styles.submitError}`}>{i18next.t('Signup:submitError')}</span>
             }
           </form>
-          <button className="btn secondary" type="button">
+          <Button customClass="secondary" loading={false} type="button">
             {i18next.t('common:login')}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
