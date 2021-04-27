@@ -14,10 +14,14 @@ interface SignUpValues {
   email: string;
   password: string;
   passwordConfirmation: string;
-};
+}
 
 function Signup() {
-  const { register, formState: { errors }, handleSubmit } = useForm<SignUpValues>();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm<SignUpValues>();
 
   const onSubmit = (data: SignUpValues) => {
     console.log({
@@ -37,15 +41,25 @@ function Signup() {
         <div className={`column center full-width ${styles.containerForm}`}>
           <form className={`column full-width ${styles.form}`} onSubmit={handleSubmit(onSubmit)}>
             <p className={styles.field}>{i18next.t('Signup:name')}</p>
-            <Input name="firstName" error={errors.firstName?.message} register={register(requiredValidation)} />
+            <Input name="firstName" error={errors.firstName?.message} inputRef={register(requiredValidation)} />
             <p className={styles.field}>{i18next.t('Signup:lastName')}</p>
-            <Input name="lastName" error={errors.lastName?.message} register={register(requiredValidation)} />
+            <Input name="lastName" error={errors.lastName?.message} inputRef={register(requiredValidation)} />
             <p className={styles.field}>{i18next.t('common:email')}</p>
-            <Input name="email" error={errors.email?.message} register={register(requiredValidation)} />
+            <Input name="email" error={errors.email?.message} inputRef={register(requiredValidation)} />
             <p className={styles.field}>{i18next.t('common:password')}</p>
-            <Input name="password" type="password" error={errors.password?.message} register={register(requiredValidation)} />
+            <Input
+              name="password"
+              type="password"
+              error={errors.password?.message}
+              inputRef={register(requiredValidation)}
+            />
             <p className={styles.field}>{i18next.t('Signup:passwordConfirmation')}</p>
-            <Input name="passwordConfirmation" type="password" error={errors.passwordConfirmation?.message} register={register(requiredValidation)} />
+            <Input
+              name="passwordConfirmation"
+              type="password"
+              error={errors.passwordConfirmation?.message}
+              inputRef={register(requiredValidation)}
+            />
             <button className="btn" type="submit">
               {i18next.t('common:signup')}
             </button>

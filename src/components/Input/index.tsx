@@ -4,15 +4,15 @@ import styles from './styles.module.scss';
 
 interface InputProps {
   name: string;
-  register: any;
+  inputRef: any;
   error?: string;
   type?: string;
 }
 
-function Input({ error, name, register, type }: InputProps) {
+function Input({ error, name, inputRef, type }: InputProps) {
   return (
     <Fragment>
-      <input className={styles.input} name={name} type={type} ref={register} />
+      <input className={styles.input} name={name} type={type} ref={inputRef} />
       {error && <p className={styles.errorMessage}>{error}</p>}
     </Fragment>
   );
