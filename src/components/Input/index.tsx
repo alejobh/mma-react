@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 
 interface InputProps {
   name: string;
-  inputRef: any;
+  inputRef?: any;
   error?: string;
   type?: string;
 }
