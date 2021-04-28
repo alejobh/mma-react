@@ -40,25 +40,37 @@ function Signup() {
         <img src={logo} alt="Wolox logo" />
         <div className={`column center full-width ${styles.containerForm}`}>
           <form className={`column full-width ${styles.form}`} onSubmit={handleSubmit(onSubmit)}>
-            <p className={styles.field}>{i18next.t('Signup:name')}</p>
-            <Input name="firstName" error={errors.firstName?.message} inputRef={register(requiredValidation)} />
-            <p className={styles.field}>{i18next.t('Signup:lastName')}</p>
-            <Input name="lastName" error={errors.lastName?.message} inputRef={register(requiredValidation)} />
-            <p className={styles.field}>{i18next.t('common:email')}</p>
-            <Input name="email" error={errors.email?.message} inputRef={register(requiredValidation)} />
-            <p className={styles.field}>{i18next.t('common:password')}</p>
             <Input
+              label={i18next.t('Signup:name')}
+              name="firstName"
+              error={errors.firstName?.message}
+              inputRef={register(requiredValidation(i18next.t('common:requiredField')))}
+            />
+            <Input
+              label={i18next.t('Signup:lastName')}
+              name="lastName"
+              error={errors.lastName?.message}
+              inputRef={register(requiredValidation(i18next.t('common:requiredField')))}
+            />
+            <Input
+              label={i18next.t('common:email')}
+              name="email"
+              error={errors.email?.message}
+              inputRef={register(requiredValidation(i18next.t('common:requiredField')))}
+            />
+            <Input
+              label={i18next.t('common:password')}
               name="password"
               type="password"
               error={errors.password?.message}
-              inputRef={register(requiredValidation)}
+              inputRef={register(requiredValidation(i18next.t('common:requiredField')))}
             />
-            <p className={styles.field}>{i18next.t('Signup:passwordConfirmation')}</p>
             <Input
+              label={i18next.t('Signup:passwordConfirmation')}
               name="passwordConfirmation"
               type="password"
               error={errors.passwordConfirmation?.message}
-              inputRef={register(requiredValidation)}
+              inputRef={register(requiredValidation(i18next.t('common:requiredField')))}
             />
             <button className="btn" type="submit">
               {i18next.t('common:signup')}

@@ -4,5 +4,6 @@ i18next.addResources('es', 'common', {
   email: 'Email',
   signup: 'Sign Up',
   password: 'Password',
-  login: 'Login'
+  login: 'Login',
+  requiredField: 'Campo requerido'
 });
