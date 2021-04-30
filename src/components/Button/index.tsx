@@ -12,7 +12,6 @@ interface ButtonProps {
 }
 
 function Button({ customClass, children, clickCallback, loading = false, type, ...props }: ButtonProps) {
-  console.log(loading);
   return (
     <button
       className={`${styles.btn} ${customClass === 'primary' ? styles.primary : styles.secondary}`}

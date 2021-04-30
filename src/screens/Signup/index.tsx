@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import i18next from 'i18next';
 import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 
 import logo from 'assets/logo.png';
-import { useLazyRequest } from 'hooks/useRequest';
 import { SignUpValues } from 'utils/types';
 import { signUp } from 'services/userService';
 import Button from 'components/Button';
@@ -11,34 +11,16 @@ import Button from 'components/Button';
 import styles from './styles.module.scss';
 
 function Signup() {
-  const [submitError, setSubmitError] = useState(false);
   const { register, handleSubmit } = useForm<SignUpValues>();
-
-  const withPostSuccess = (response: any) => {
-    console.log(response);
-  };
-
-  const withPostFailure = () => {
-    setSubmitError(true);
-  };
-
-  const [, submitting, , signUpCallback] = useLazyRequest({
-    request: signUp,
-    withPostSuccess,
-    withPostFailure
-  });
+  const signupMutation = useMutation((data: SignUpValues) => signUp(data), {
+    onSuccess: data => {
+      console.log(data);
+    }
+  })
 
   const onSubmit = (formData: SignUpValues) => {
-    setSubmitError(false);
-    const payload = {
-      email: formData.email,
-      password: formData.password,
-      passwordConfirmation: formData.passwordConfirmation,
-      firstName: formData.name,
-      lastName: formData.lastName,
-      locale: 'en'
-    };
-    signUpCallback(payload);
+    signupMutation.reset();
+    signupMutation.mutate({ ...formData, locale: 'en' });
   };
 
   return (
@@ -47,8 +29,8 @@ function Signup() {
         <img src={logo} alt="Wolox logo" />
         <div className={`column center full-width ${styles.containerForm}`}>
           <form className={`column full-width ${styles.form}`} onSubmit={handleSubmit(onSubmit)}>
-            <p>{i18next.t('Signup:name')}</p>
-            <input name="name" ref={register} />
+            <p>{i18next.t('Signup:firstName')}</p>
+            <input name="firstName" ref={register} />
             <p>{i18next.t('Signup:lastName')}</p>
             <input name="lastName" ref={register} />
             <p>{i18next.t('common:email')}</p>
@@ -57,10 +39,10 @@ function Signup() {
             <input name="password" type="password" ref={register} />
             <p>{i18next.t('Signup:passwordConfirmation')}</p>
             <input name="passwordConfirmation" type="password" ref={register} />
-            <Button customClass="primary" loading={submitting} type="submit">
+            <Button customClass="primary" loading={signupMutation.isLoading} type="submit">
               {i18next.t('common:signup')}
             </Button>
-            {submitError &&
+            {signupMutation.error &&
               <span className={`text-error ${styles.submitError}`}>{i18next.t('Signup:submitError')}</span>
             }
           </form>
