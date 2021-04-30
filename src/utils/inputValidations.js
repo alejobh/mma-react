@@ -23,5 +23,3 @@ export const numericalFourDigits = errorMessage => pattern(numericalFourDigitsRe
 export const numericalTenDigits = errorMessage => pattern(numericalTenDigitsRegex, errorMessage);
 
 export const numericalDigits = errorMessage => pattern(numericalDigitsRegex, errorMessage);
-
-export const requiredValidation = errorMessage => ({ required: { value: true, message: errorMessage } });

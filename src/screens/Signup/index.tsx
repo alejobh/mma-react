@@ -1,10 +1,10 @@
 import React from 'react';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 
 import logo from 'assets/logo.png';
 import Input from 'components/Input';
-import { requiredValidation } from 'utils/inputValidations';
+import { requiredValidation } from 'utils/formValidations';
 
 import styles from './styles.module.scss';
 
@@ -22,6 +22,8 @@ function Signup() {
     formState: { errors },
     handleSubmit
   } = useForm<SignUpValues>();
+
+  const { t } = useTranslation();
 
   const onSubmit = (data: SignUpValues) => {
     console.log({
@@ -41,43 +43,43 @@ function Signup() {
         <div className={`column center full-width ${styles.containerForm}`}>
           <form className={`column full-width ${styles.form}`} onSubmit={handleSubmit(onSubmit)}>
             <Input
-              label={i18next.t('Signup:name')}
+              label={t('Signup:name')}
               name="firstName"
               error={errors.firstName?.message}
-              inputRef={register(requiredValidation(i18next.t('common:requiredField')))}
+              inputRef={register(requiredValidation(t))}
             />
             <Input
-              label={i18next.t('Signup:lastName')}
+              label={t('Signup:lastName')}
               name="lastName"
               error={errors.lastName?.message}
-              inputRef={register(requiredValidation(i18next.t('common:requiredField')))}
+              inputRef={register(requiredValidation(t))}
             />
             <Input
-              label={i18next.t('common:email')}
+              label={t('common:email')}
               name="email"
               error={errors.email?.message}
-              inputRef={register(requiredValidation(i18next.t('common:requiredField')))}
+              inputRef={register(requiredValidation(t))}
             />
             <Input
-              label={i18next.t('common:password')}
+              label={t('common:password')}
               name="password"
               type="password"
               error={errors.password?.message}
-              inputRef={register(requiredValidation(i18next.t('common:requiredField')))}
+              inputRef={register(requiredValidation(t))}
             />
             <Input
-              label={i18next.t('Signup:passwordConfirmation')}
+              label={t('Signup:passwordConfirmation')}
               name="passwordConfirmation"
               type="password"
               error={errors.passwordConfirmation?.message}
-              inputRef={register(requiredValidation(i18next.t('common:requiredField')))}
+              inputRef={register(requiredValidation(t))}
             />
             <button className="btn" type="submit">
-              {i18next.t('common:signup')}
+              {t('common:signup')}
             </button>
           </form>
           <button className="btn secondary" type="button">
-            {i18next.t('common:login')}
+            {t('common:login')}
           </button>
         </div>
       </div>
