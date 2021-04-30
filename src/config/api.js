@@ -1,5 +1,8 @@
 import { create } from 'apisauce';
-import { SnakecaseSerializer } from 'cerealizr';
+import { CamelcaseSerializer, SnakecaseSerializer } from 'cerealizr';
+
+const snakeCase = new SnakecaseSerializer();
+const camelCase = new CamelcaseSerializer();
 
 const baseURL = 'https://books-training-rails.herokuapp.com/api/v1';
 
@@ -38,10 +41,21 @@ export const apiSetup = dispatch => {
   });
 };
 
-const snakeCase = new SnakecaseSerializer();
-
 api.addRequestTransform(request => {
-  request.data = snakeCase.serialize(request.data);
+  if (request.data) {
+    request.data = snakeCase.serialize(request.data);
+  } else if (request.params) {
+    request.params = snakeCase.serialize(request.params);
+  }
 });
+
+
+api.addResponseTransform(response => {
+  if (response.ok) {
+    response.data = camelCase.serialize(response.data);
+  } else {
+    throw response;
+  }
+})
 
 export default api;
