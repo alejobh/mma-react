@@ -39,7 +39,7 @@ function Signup() {
   return (
     <div className="column center full-width">
       <div className={`column center full-width ${styles.container}`}>
-        <img src={logo} alt="Wolox logo" />
+        <img className={styles.logo} src={logo} alt="Wolox logo" />
         <div className={`column center full-width ${styles.containerForm}`}>
           <form className={`column full-width ${styles.form}`} onSubmit={handleSubmit(onSubmit)}>
             <Input

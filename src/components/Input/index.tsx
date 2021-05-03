@@ -16,7 +16,7 @@ function Input({ error, label, name, inputRef, type }: InputProps) {
       <label htmlFor={name} className={styles.label}>
         {label}
       </label>
-      <input className={styles.input} name={name} type={type} ref={inputRef} />
+      <input id={name} className={styles.input} name={name} type={type} ref={inputRef} />
       {error && <p className={styles.errorMessage}>{error}</p>}
     </Fragment>
   );

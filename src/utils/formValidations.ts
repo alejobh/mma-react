@@ -1,5 +1,5 @@
-type TranslateFunction = (key: string) => string;
+import { TFunction } from 'react-i18next';
 
-export const requiredValidation = (translate: TranslateFunction) => ({
+export const requiredValidation = (translate: TFunction) => ({
   required: translate('common:requiredField')
 });
