@@ -6,7 +6,12 @@ import { useMutation } from 'react-query';
 import logo from 'assets/logo.png';
 import Input from 'components/Input';
 import Loading from 'components/Spinner/components/loading';
-import { requiredValidation } from 'utils/formValidations';
+import {
+  requiredValidation,
+  emailValidation,
+  passwordValidation,
+  passwordConfirmationValidation
+} from 'utils/formValidations';
 import { SignUpValues } from 'utils/types';
 import { signUp } from 'services/userService';
 
@@ -18,7 +23,8 @@ function Signup() {
   const {
     register,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
+    getValues
   } = useForm<SignUpValues>();
 
   const signupMutation = useMutation((data: SignUpValues) => signUp(data), {
@@ -54,21 +60,21 @@ function Signup() {
               label={t('common:email')}
               name="email"
               error={errors.email?.message}
-              inputRef={register(requiredValidation(t))}
+              inputRef={register(emailValidation(t))}
             />
             <Input
               label={t('common:password')}
               name="password"
               type="password"
               error={errors.password?.message}
-              inputRef={register(requiredValidation(t))}
+              inputRef={register(passwordValidation(t))}
             />
             <Input
               label={t('Signup:passwordConfirmation')}
               name="passwordConfirmation"
               type="password"
               error={errors.passwordConfirmation?.message}
-              inputRef={register(requiredValidation(t))}
+              inputRef={register(passwordConfirmationValidation(t, getValues('password')))}
             />
             {signupMutation.isLoading ? (
               <Loading className="self-center" />
