@@ -25,7 +25,7 @@ function Signup() {
 
   const { t } = useTranslation();
 
-  const onSubmit = (data: SignUpValues) => {
+  const onSubmit = handleSubmit(data => {
     console.log({
       email: data.email,
       password: data.password,
@@ -34,14 +34,14 @@ function Signup() {
       last_name: data.lastName,
       locale: 'en'
     });
-  };
+  });
 
   return (
     <div className="column center full-width">
       <div className={`column center full-width ${styles.container}`}>
         <img className={styles.logo} src={logo} alt="Wolox logo" />
         <div className={`column center full-width ${styles.containerForm}`}>
-          <form className={`column full-width ${styles.form}`} onSubmit={handleSubmit(onSubmit)}>
+          <form className={`column full-width ${styles.form}`} onSubmit={onSubmit}>
             <Input
               label={t('Signup:name')}
               name="firstName"
