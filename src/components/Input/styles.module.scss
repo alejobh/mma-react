@@ -1,0 +1,19 @@
+@import "scss/variables/_colors";
+
+.input {
+  border-radius: 5px;
+  height: 32px;
+  margin-bottom: 16px;
+}
+
+.label {
+  color: $black;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 8px;
+}
+
+.error-message {
+  color: $red;
+  margin-bottom: 8px;
+}
