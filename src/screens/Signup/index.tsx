@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 
 import logo from 'assets/logo.png';
-import Button from 'components/Button';
 import Input from 'components/Input';
+import Loading from 'components/Spinner/components/loading';
 import { requiredValidation } from 'utils/formValidations';
 import { SignUpValues } from 'utils/types';
 import { signUp } from 'services/userService';
@@ -27,19 +27,19 @@ function Signup() {
     }
   });
 
-  const onSubmit = (formData: SignUpValues) => {
+  const onSubmit = handleSubmit(formData => {
     signupMutation.reset();
     signupMutation.mutate({ ...formData, locale: 'en' });
-  };
+  });
 
   return (
     <div className="column center full-width">
       <div className={`column center full-width ${styles.container}`}>
         <img className={styles.logo} src={logo} alt="Wolox logo" />
         <div className={`column center full-width ${styles.containerForm}`}>
-          <form className={`column full-width ${styles.form}`} onSubmit={handleSubmit(onSubmit)}>
+          <form className={`column full-width ${styles.form}`} onSubmit={onSubmit}>
             <Input
-              label={t('Signup:name')}
+              label={t('Signup:firstName')}
               name="firstName"
               error={errors.firstName?.message}
               inputRef={register(requiredValidation(t))}
@@ -70,16 +70,20 @@ function Signup() {
               error={errors.passwordConfirmation?.message}
               inputRef={register(requiredValidation(t))}
             />
-            <Button customClass="primary" loading={signupMutation.isLoading} type="submit">
-              {t('common:signup')}
-            </Button>
+            {signupMutation.isLoading ? (
+              <Loading className="self-center" />
+            ) : (
+              <button className="btn" type="submit">
+                {t('common:signup')}
+              </button>
+            )}
             {signupMutation.error && (
               <span className={`text-error ${styles.submitError}`}>{t('Signup:submitError')}</span>
             )}
           </form>
-          <Button customClass="secondary" loading={false} type="button">
+          <button className="btn secondary" type="button">
             {t('common:login')}
-          </Button>
+          </button>
         </div>
       </div>
     </div>
