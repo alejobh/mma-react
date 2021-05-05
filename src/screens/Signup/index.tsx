@@ -24,7 +24,7 @@ function Signup() {
     register,
     formState: { errors },
     handleSubmit,
-    getValues
+    watch
   } = useForm<SignUpValues>();
 
   const signupMutation = useMutation((data: SignUpValues) => signUp(data), {
@@ -74,7 +74,7 @@ function Signup() {
               name="passwordConfirmation"
               type="password"
               error={errors.passwordConfirmation?.message}
-              inputRef={register(passwordConfirmationValidation(t, getValues('password')))}
+              inputRef={register(passwordConfirmationValidation(t, watch('password')))}
             />
             {signupMutation.isLoading ? (
               <Loading className="self-center" />
@@ -83,8 +83,10 @@ function Signup() {
                 {t('common:signup')}
               </button>
             )}
-            {signupMutation.error && (
+            {signupMutation.error ? (
               <span className={`text-error ${styles.submitError}`}>{t('Signup:submitError')}</span>
+            ) : (
+              <span>{t('Signup:submitSuccess')}</span>
             )}
           </form>
           <button className="btn secondary" type="button">
