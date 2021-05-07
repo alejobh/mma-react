@@ -1,6 +1,6 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -14,6 +14,12 @@ jest.mock('react-i18next', () => ({
     t: (key: string) => key,
     i18n: { changeLanguage: jest.fn() }
   })
+}));
+
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  useHistory: () => ({ push: mockHistoryPush })
 }));
 
 describe('Signup screen', () => {
@@ -96,7 +102,7 @@ describe('Signup screen', () => {
 
     test('Submit successful', async () => {
       userEvent.click(screen.getByRole('button', { name: 'common:signup' }));
-      expect(await screen.findByText('Signup:submitSuccess')).toBeVisible();
+      await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledWith('/login'));
     });
 
     test('Submit failed', async () => {

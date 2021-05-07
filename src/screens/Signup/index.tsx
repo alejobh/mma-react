@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
+import { useHistory } from 'react-router-dom';
 
 import logo from 'assets/logo.png';
 import Input from 'components/Input';
@@ -19,6 +20,7 @@ import styles from './styles.module.scss';
 
 function Signup() {
   const { t } = useTranslation();
+  const history = useHistory();
 
   const {
     register,
@@ -28,8 +30,8 @@ function Signup() {
   } = useForm<SignUpValues>();
 
   const signupMutation = useMutation((data: SignUpValues) => signUp(data), {
-    onSuccess: data => {
-      console.log(data);
+    onSuccess: () => {
+      history.push('/login');
     }
   });
 
@@ -83,10 +85,8 @@ function Signup() {
                 {t('common:signup')}
               </button>
             )}
-            {signupMutation.error ? (
-              <span className={`text-error ${styles.submitError}`}>{t('Signup:submitError')}</span>
-            ) : (
-              <span>{t('Signup:submitSuccess')}</span>
+            {signupMutation.error && (
+              <span className={`text-error ${styles.submitMessage}`}>{t('Signup:submitError')}</span>
             )}
           </form>
           <button className="btn secondary" type="button">
