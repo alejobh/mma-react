@@ -37,12 +37,12 @@ function Signup() {
 
   const { error, isLoading, mutate, reset } = useMutation((data: SignUpValues) => signUp(data), {
     onSuccess: data => {
+      reset();
       console.log(data);
     }
   });
 
   const onSubmit = handleSubmit(formData => {
-    reset();
     mutate({ ...formData, locale: 'en' });
   });
 
