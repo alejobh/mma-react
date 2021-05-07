@@ -12,10 +12,18 @@ import {
   passwordValidation,
   passwordConfirmationValidation
 } from 'utils/formValidations';
-import { SignUpValues } from 'utils/types';
 import { signUp } from 'services/userService';
 
 import styles from './styles.module.scss';
+
+export interface SignUpValues {
+  email: string;
+  firstName: string;
+  lastName: string;
+  locale: string;
+  password: string;
+  passwordConfirmation: string;
+}
 
 function Signup() {
   const { t } = useTranslation();
@@ -27,15 +35,15 @@ function Signup() {
     watch
   } = useForm<SignUpValues>();
 
-  const signupMutation = useMutation((data: SignUpValues) => signUp(data), {
+  const { error, isLoading, mutate, reset } = useMutation((data: SignUpValues) => signUp(data), {
     onSuccess: data => {
+      reset();
       console.log(data);
     }
   });
 
   const onSubmit = handleSubmit(formData => {
-    signupMutation.reset();
-    signupMutation.mutate({ ...formData, locale: 'en' });
+    mutate({ ...formData, locale: 'en' });
   });
 
   return (
@@ -76,14 +84,14 @@ function Signup() {
               error={errors.passwordConfirmation?.message}
               inputRef={register(passwordConfirmationValidation(t, watch('password')))}
             />
-            {signupMutation.isLoading ? (
+            {isLoading ? (
               <Loading className="self-center" />
             ) : (
               <button className="btn" type="submit">
                 {t('common:signup')}
               </button>
             )}
-            {signupMutation.error ? (
+            {error ? (
               <span className={`text-error ${styles.submitError}`}>{t('Signup:submitError')}</span>
             ) : (
               <span>{t('Signup:submitSuccess')}</span>
