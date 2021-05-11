@@ -5,5 +5,6 @@ i18next.addResources('es', 'common', {
   signup: 'Sign Up',
   password: 'Password',
   login: 'Login',
-  requiredField: 'Campo requerido'
+  requiredField: 'Campo requerido',
+  submitError: 'Error procesando su solicitud'
 });

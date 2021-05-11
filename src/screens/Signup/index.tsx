@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import logo from 'assets/logo.png';
 import Input from 'components/Input';
@@ -41,7 +41,7 @@ function Signup() {
   });
 
   return (
-    <div className="column center full-width">
+    <div className="column center viewport-width">
       <div className={`column center full-width ${styles.container}`}>
         <img className={styles.logo} src={logo} alt="Wolox logo" />
         <div className={`column center full-width ${styles.containerForm}`}>
@@ -86,12 +86,12 @@ function Signup() {
               </button>
             )}
             {signupMutation.error && (
-              <span className={`text-error ${styles.submitMessage}`}>{t('Signup:submitError')}</span>
+              <span className={`text-error ${styles.submitMessage}`}>{t('common:submitError')}</span>
             )}
           </form>
-          <button className="btn secondary" type="button">
+          <Link className="btn secondary" to="/login">
             {t('common:login')}
-          </button>
+          </Link>
         </div>
       </div>
     </div>

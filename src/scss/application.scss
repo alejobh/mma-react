@@ -14,6 +14,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, "Droid Sans", sans-serif;
+  width: calc(100% - 15px); // give space for the scrollbar in order to mantain screens alignment
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -28,15 +29,18 @@ code {
 }
 
 .btn {
-  border-radius: 5px;
   background-color: $wolox-green;
-  height: 32px;
+  border-radius: 5px;
   color: $white;
+  height: 32px;
   width: 100%;
 
   &.secondary {
+    align-items: center;
+    background-color: $wild-sand;
     border: 1px solid $wolox-green;
     color: $wolox-green;
-    background-color: $wild-sand;
+    display: flex;
+    justify-content: center;
   }
 }

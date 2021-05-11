@@ -54,7 +54,7 @@ api.addResponseTransform(response => {
   if (response.ok) {
     response.data = camelCase.serialize(response.data);
   } else {
-    throw response;
+    throw { errors: response.data.errors, status: response.status };
   }
 })
 

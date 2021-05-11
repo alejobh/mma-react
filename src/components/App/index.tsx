@@ -2,24 +2,26 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
+import CustomRoute from 'components/Routes';
+import { routesList, ROUTES } from 'components/Routes/constants';
+
 import 'scss/application.scss';
-import Signup from 'screens/Signup';
 
 const queryClient = new QueryClient();
 
 function App() {
+  const renderRoutes = () =>
+    routesList.map(route => (
+      <CustomRoute key={route.path} component={route.component} path={route.path} isPrivate={route.private} />
+    ));
+
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
         <Switch>
-          <Route path="/login">
-            <h1>Login Page</h1>
-          </Route>
-          <Route path="/signup">
-            <Signup />
-          </Route>
+          {renderRoutes()}
           <Route path="/">
-            <Redirect to="/signup" />
+            <Redirect to={ROUTES.LOGIN} />
           </Route>
         </Switch>
       </Router>
