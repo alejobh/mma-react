@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -27,6 +27,7 @@ export interface SignUpValues {
 
 function Signup() {
   const { t } = useTranslation();
+  const [success, setSuccess] = useState(false);
 
   const {
     register,
@@ -38,11 +39,13 @@ function Signup() {
   const { error, isLoading, mutate, reset } = useMutation((data: SignUpValues) => signUp(data), {
     onSuccess: data => {
       reset();
+      setSuccess(true);
       console.log(data);
     }
   });
 
   const onSubmit = handleSubmit(formData => {
+    setSuccess(false);
     mutate({ ...formData, locale: 'en' });
   });
 
@@ -91,11 +94,8 @@ function Signup() {
                 {t('common:signup')}
               </button>
             )}
-            {error ? (
-              <span className={`text-error ${styles.submitError}`}>{t('Signup:submitError')}</span>
-            ) : (
-              <span>{t('Signup:submitSuccess')}</span>
-            )}
+            {error && <span className={`text-error ${styles.submitMessage}`}>{t('Signup:submitError')}</span>}
+            {success && <span className={styles.submitMessage}>{t('Signup:submitSuccess')}</span>}
           </form>
           <button className="btn secondary" type="button">
             {t('common:login')}
