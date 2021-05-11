@@ -112,6 +112,7 @@ describe('Signup screen', () => {
         )
       );
       userEvent.click(screen.getByRole('button', { name: 'common:signup' }));
+      expect(await screen.findByRole('button', { name: 'common:signup' })).toBeVisible();
       expect(await screen.findByText('Signup:submitError')).toBeVisible();
     });
   });
