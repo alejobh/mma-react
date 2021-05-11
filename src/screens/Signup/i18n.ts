@@ -7,5 +7,6 @@ i18next.addResources('es', 'Signup', {
   passwordConfirmation: 'Confirmación de Password',
   passwordConfirmationError: 'La confirmación debe coincidir con la contraseña',
   passwordLengthError: 'La contraseña debe tener al menos 6 caracteres',
-  submitError: 'Error en los datos ingresados'
+  submitError: 'Error en los datos ingresados',
+  submitSuccess: 'Usuario creado exitosamente!'
 });
