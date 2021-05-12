@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
+import { useHistory } from 'react-router-dom';
 
 import logo from 'assets/logo.png';
 import Input from 'components/Input';
@@ -27,7 +28,7 @@ export interface SignUpValues {
 
 function Signup() {
   const { t } = useTranslation();
-  const [success, setSuccess] = useState(false);
+  const history = useHistory();
 
   const {
     register,
@@ -37,15 +38,13 @@ function Signup() {
   } = useForm<SignUpValues>();
 
   const { error, isLoading, mutate, reset } = useMutation((data: SignUpValues) => signUp(data), {
-    onSuccess: data => {
+    onSuccess: () => {
       reset();
-      setSuccess(true);
-      console.log(data);
+      history.push('/login');
     }
   });
 
   const onSubmit = handleSubmit(formData => {
-    setSuccess(false);
     mutate({ ...formData, locale: 'en' });
   });
 
@@ -95,7 +94,6 @@ function Signup() {
               </button>
             )}
             {error && <span className={`text-error ${styles.submitMessage}`}>{t('Signup:submitError')}</span>}
-            {success && <span className={styles.submitMessage}>{t('Signup:submitSuccess')}</span>}
           </form>
           <button className="btn secondary" type="button">
             {t('common:login')}
