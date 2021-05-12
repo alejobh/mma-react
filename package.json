@@ -32,7 +32,7 @@
     "start": "rescripts start",
     "start-env": "node ./scripts/start.js",
     "build": "node ./scripts/build.js",
-    "test": "rescripts test --env=jsdom --coverage",
+    "test": "rescripts test --env=jsdom --coverage --passWithNoTests --watchAll=false",
     "eject": "./node_modules/react-scripts/bin/react-scripts.js eject",
     "lint": "./node_modules/eslint/bin/eslint.js src --ext .js --ext .ts --ext .tsx",
     "lint-fix": "npm run lint -- --fix && ./node_modules/stylelint/bin/stylelint.js '**/*.scss' --fix",
@@ -94,7 +94,8 @@
       "^~(.*)/(.*)$": "<rootDir>/src/$1/$2"
     },
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}"
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/hooks/useRequest.*"
     ],
     "coverageThreshold": {
       "global": {

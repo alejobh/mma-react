@@ -7,7 +7,7 @@ import { useMutation } from 'react-query';
 import logo from 'assets/logo.png';
 import Input from 'components/Input';
 import Loading from 'components/Spinner/components/loading';
-import { ROUTES } from 'components/Routes/constants';
+import { ROUTES } from 'components/Router/constants';
 import { Error } from 'config/apiTypes';
 import { requiredValidation, emailValidation } from 'utils/formValidations';
 import { login } from 'services/userService';
@@ -31,8 +31,9 @@ function Login() {
   } = useForm<LoginValues>();
 
   const { error, isLoading, mutate, reset } = useMutation((data: LoginValues) => login(data), {
-    onSuccess: () => {
-      history.push(ROUTES.HOME);
+    onSuccess: response => {
+      console.log(response);
+      history.push(ROUTES.home);
     },
     onError: (err: Error) => {
       const errorMessage = err.status === 401 ? 'Login:invalidCredentials' : 'common:submitError';
@@ -46,7 +47,7 @@ function Login() {
   });
 
   return (
-    <div className="column center viewport-width">
+    <div className="column center">
       <div className={`column center full-width ${styles.container}`}>
         <img className={styles.logo} src={logo} alt="Wolox logo" />
         <div className={`column center full-width ${styles.containerForm}`}>

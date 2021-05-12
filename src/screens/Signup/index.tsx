@@ -13,10 +13,18 @@ import {
   passwordValidation,
   passwordConfirmationValidation
 } from 'utils/formValidations';
-import { SignUpValues } from 'utils/types';
 import { signUp } from 'services/userService';
 
 import styles from './styles.module.scss';
+
+export interface SignUpValues {
+  email: string;
+  firstName: string;
+  lastName: string;
+  locale: string;
+  password: string;
+  passwordConfirmation: string;
+}
 
 function Signup() {
   const { t } = useTranslation();
@@ -29,19 +37,19 @@ function Signup() {
     watch
   } = useForm<SignUpValues>();
 
-  const signupMutation = useMutation((data: SignUpValues) => signUp(data), {
+  const { error, isLoading, mutate, reset } = useMutation((data: SignUpValues) => signUp(data), {
     onSuccess: () => {
+      reset();
       history.push('/login');
     }
   });
 
   const onSubmit = handleSubmit(formData => {
-    signupMutation.reset();
-    signupMutation.mutate({ ...formData, locale: 'en' });
+    mutate({ ...formData, locale: 'en' });
   });
 
   return (
-    <div className="column center viewport-width">
+    <div className="column center">
       <div className={`column center full-width ${styles.container}`}>
         <img className={styles.logo} src={logo} alt="Wolox logo" />
         <div className={`column center full-width ${styles.containerForm}`}>
@@ -78,16 +86,14 @@ function Signup() {
               error={errors.passwordConfirmation?.message}
               inputRef={register(passwordConfirmationValidation(t, watch('password')))}
             />
-            {signupMutation.isLoading ? (
+            {isLoading ? (
               <Loading className="self-center" />
             ) : (
               <button className="btn" type="submit">
                 {t('common:signup')}
               </button>
             )}
-            {signupMutation.error && (
-              <span className={`text-error ${styles.submitMessage}`}>{t('common:submitError')}</span>
-            )}
+            {error && <span className={`text-error ${styles.submitMessage}`}>{t('Signup:submitError')}</span>}
           </form>
           <Link className="btn secondary" to="/login">
             {t('common:login')}

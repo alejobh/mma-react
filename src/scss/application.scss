@@ -1,12 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-@import "~wolox-equalizer/equalizer";
+@import '~wolox-equalizer/equalizer';
 
-@import "layout";
+@import 'layout';
 
-@import "margins";
+@import 'margins';
 
-@import "components";
+@import 'components';
 
 // TODO: Edit this global styles
 
@@ -14,7 +14,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, "Droid Sans", sans-serif;
-  width: calc(100% - 15px); // give space for the scrollbar in order to mantain screens alignment
+  width: 100vw;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -25,7 +25,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .btn {
