@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
+import Navbar from 'components/Navbar';
 import LocalStorageService from 'services/LocalStorageService';
 
 import { ROUTES } from '../../constants';
@@ -13,7 +14,14 @@ function CustomRoute({ path, isPrivate, ...props }: RouteProps & CustomRouteProp
   const userAuthenticated = LocalStorageService.getValue('session');
 
   if (userAuthenticated) {
-    return isPrivate ? <Route path={path} {...props} /> : <Redirect to={ROUTES.home} />;
+    return isPrivate ? (
+      <Fragment>
+        <Navbar />
+        <Route path={path} {...props} />
+      </Fragment>
+    ) : (
+      <Redirect to={ROUTES.home} />
+    );
   }
   return isPrivate ? <Redirect to={ROUTES.login} /> : <Route path={path} {...props} />;
 }

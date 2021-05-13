@@ -5,6 +5,7 @@ i18next.addResources('es', 'common', {
   signup: 'Sign Up',
   password: 'Password',
   login: 'Login',
+  logout: 'Logout',
   requiredField: 'Campo requerido',
   emailError: 'El formato de email es inválido',
   submitError: 'Error procesando su solicitud'
