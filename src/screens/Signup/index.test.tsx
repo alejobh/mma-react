@@ -4,8 +4,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
+import { BrowserRouter } from 'react-router-dom';
 
-import Signup from './index';
+import Signup from 'screens/Signup';
 
 const queryClient = new QueryClient();
 
@@ -18,15 +19,22 @@ jest.mock('react-i18next', () => ({
 
 const mockHistoryPush = jest.fn();
 
-jest.mock('react-router-dom', () => ({
-  useHistory: () => ({ push: mockHistoryPush })
-}));
+jest.mock('react-router-dom', () => {
+  const routerDom = jest.requireActual('react-router-dom');
+
+  return {
+    ...routerDom,
+    useHistory: () => ({ push: mockHistoryPush })
+  };
+});
 
 describe('Signup screen', () => {
   beforeEach(() => {
     render(
       <QueryClientProvider client={queryClient}>
-        <Signup />
+        <BrowserRouter>
+          <Signup />
+        </BrowserRouter>
       </QueryClientProvider>
     );
   });
@@ -73,7 +81,7 @@ describe('Signup screen', () => {
         userEvent.type(emailInput, '{backspace}');
         userEvent.click(screen.getByRole('button', { name: 'common:signup' }));
         expect(emailInput).toHaveValue('test@test.');
-        expect(await screen.findByText('Signup:emailError')).toBeVisible();
+        expect(await screen.findByText('common:emailError')).toBeVisible();
       });
     });
   });

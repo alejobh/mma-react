@@ -10,7 +10,7 @@ export const emailValidation = (translate: TFunction) => ({
   ...requiredValidation(translate),
   pattern: {
     value: emailRegex,
-    message: translate('Signup:emailError')
+    message: translate('common:emailError')
   }
 });
 

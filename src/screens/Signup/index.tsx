@@ -5,6 +5,7 @@ import { useMutation } from 'react-query';
 import { useHistory, Link } from 'react-router-dom';
 
 import logo from 'assets/logo.png';
+import { ROUTES } from 'components/Router/constants';
 import Input from 'components/Input';
 import Loading from 'components/Spinner/components/loading';
 import {
@@ -17,7 +18,7 @@ import { signUp } from 'services/userService';
 
 import styles from './styles.module.scss';
 
-export interface SignUpValues {
+interface SignUpValues {
   email: string;
   firstName: string;
   lastName: string;
@@ -40,7 +41,7 @@ function Signup() {
   const { error, isLoading, mutate, reset } = useMutation((data: SignUpValues) => signUp(data), {
     onSuccess: () => {
       reset();
-      history.push('/login');
+      history.push(ROUTES.login);
     }
   });
 
@@ -95,7 +96,7 @@ function Signup() {
             )}
             {error && <span className={`text-error ${styles.submitMessage}`}>{t('Signup:submitError')}</span>}
           </form>
-          <Link className="btn secondary" to="/login">
+          <Link className="btn secondary" to={ROUTES.login}>
             {t('common:login')}
           </Link>
         </div>

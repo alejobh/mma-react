@@ -74,7 +74,7 @@ function Login() {
             )}
             {error && <span className={`text-error ${styles.submitMessage}`}>{t(errorStatus)}</span>}
           </form>
-          <Link className="btn secondary" to="/signup">
+          <Link className="btn secondary" to={ROUTES.signUp}>
             {t('common:signup')}
           </Link>
         </div>

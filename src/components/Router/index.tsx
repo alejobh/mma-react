@@ -24,15 +24,15 @@ const routesList = [
   }
 ];
 
-function CustomRouter() {
-  const renderRoutes = () =>
-    routesList.map(route => <CustomRoute key={route.path} isPrivate={route.private} {...route} />);
+const renderRoutes = () =>
+  routesList.map(route => <CustomRoute key={route.path} isPrivate={route.private} {...route} />);
 
+function CustomRouter() {
   return (
     <Router>
       <Switch>
         {renderRoutes()}
-        <Redirect to={ROUTES.signUp} />
+        <Redirect to={ROUTES.login} />
       </Switch>
     </Router>
   );
