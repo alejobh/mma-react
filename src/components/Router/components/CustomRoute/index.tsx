@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import { SESSION } from 'constants/general';
+import { LOCAL_STORAGE_KEYS } from 'constants/general';
 import PATHS from 'constants/paths';
 import LocalStorageService from 'services/LocalStorageService';
 
@@ -10,7 +10,7 @@ interface CustomRouteProps {
 }
 
 function CustomRoute({ path, isPrivate, ...props }: RouteProps & CustomRouteProps) {
-  const userAuthenticated = LocalStorageService.getValue(SESSION);
+  const userAuthenticated = LocalStorageService.getValue(LOCAL_STORAGE_KEYS.session);
 
   if (userAuthenticated) {
     return isPrivate ? <Route path={path} {...props} /> : <Redirect to={PATHS.home} />;

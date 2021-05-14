@@ -4,4 +4,6 @@ export const RESPONSE_STATUS = {
   error: 422
 };
 
-export const SESSION = 'session';
+export const LOCAL_STORAGE_KEYS = {
+  session: 'session'
+};

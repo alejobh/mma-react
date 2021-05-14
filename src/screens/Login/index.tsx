@@ -8,7 +8,7 @@ import logo from 'assets/logo.png';
 import Input from 'components/Input';
 import Loading from 'components/Spinner/components/loading';
 import PATHS from 'constants/paths';
-import { SESSION, RESPONSE_STATUS } from 'constants/general';
+import { LOCAL_STORAGE_KEYS, RESPONSE_STATUS } from 'constants/general';
 import LocalStorageService from 'services/LocalStorageService';
 import { login } from 'services/userService';
 import { requiredValidation, emailValidation } from 'utils/formValidations';
@@ -29,7 +29,7 @@ function Login() {
 
   const { error, isLoading, mutate, reset } = useMutation((data: LoginValues) => login(data), {
     onSuccess: response => {
-      LocalStorageService.setValue(SESSION, response.token);
+      LocalStorageService.setValue(LOCAL_STORAGE_KEYS.session, response.token);
       history.push(PATHS.home);
     },
     onError: (err: Error) => {
