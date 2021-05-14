@@ -5,27 +5,19 @@ import { useMutation } from 'react-query';
 import { useHistory, Link } from 'react-router-dom';
 
 import logo from 'assets/logo.png';
-import { ROUTES } from 'components/Router/constants';
+import PATHS from 'constants/paths';
 import Input from 'components/Input';
 import Loading from 'components/Spinner/components/loading';
+import { signUp } from 'services/userService';
 import {
   requiredValidation,
   emailValidation,
   passwordValidation,
   passwordConfirmationValidation
 } from 'utils/formValidations';
-import { signUp } from 'services/userService';
+import { SignUpValues } from 'utils/types';
 
 import styles from './styles.module.scss';
-
-interface SignUpValues {
-  email: string;
-  firstName: string;
-  lastName: string;
-  locale: string;
-  password: string;
-  passwordConfirmation: string;
-}
 
 function Signup() {
   const { t } = useTranslation();
@@ -41,7 +33,7 @@ function Signup() {
   const { error, isLoading, mutate, reset } = useMutation((data: SignUpValues) => signUp(data), {
     onSuccess: () => {
       reset();
-      history.push(ROUTES.login);
+      history.push(PATHS.login);
     }
   });
 
@@ -68,13 +60,13 @@ function Signup() {
               inputRef={register(requiredValidation(t))}
             />
             <Input
-              label={t('common:email')}
+              label={t('Common:email')}
               name="email"
               error={errors.email?.message}
               inputRef={register(emailValidation(t))}
             />
             <Input
-              label={t('common:password')}
+              label={t('Common:password')}
               name="password"
               type="password"
               error={errors.password?.message}
@@ -91,13 +83,13 @@ function Signup() {
               <Loading className="self-center" />
             ) : (
               <button className="btn" type="submit">
-                {t('common:signup')}
+                {t('Common:signup')}
               </button>
             )}
             {error && <span className={`text-error ${styles.submitMessage}`}>{t('Signup:submitError')}</span>}
           </form>
-          <Link className="btn secondary" to={ROUTES.login}>
-            {t('common:login')}
+          <Link className="btn secondary" to={PATHS.login}>
+            {t('Common:login')}
           </Link>
         </div>
       </div>
