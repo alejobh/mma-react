@@ -1,25 +1,20 @@
-import Home from 'screens/Home';
 import Signup from 'screens/Signup';
+import Home from 'screens/Home';
 import Login from 'screens/Login';
-
-export const ROUTES = {
-  home: '/book-list',
-  login: '/login',
-  signUp: '/signup'
-};
+import PATHS from 'constants/paths';
 
 export const routesList = [
   {
     component: Signup,
-    path: ROUTES.signUp
+    path: PATHS.signUp
   },
   {
     component: Home,
-    path: ROUTES.home,
+    path: PATHS.home,
     private: true
   },
   {
     component: Login,
-    path: ROUTES.login
+    path: PATHS.login
   }
 ];

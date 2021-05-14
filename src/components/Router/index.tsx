@@ -1,8 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Switch } from 'react-router-dom';
+
+import PATHS from 'constants/paths';
 
 import CustomRoute from './components/CustomRoute';
-import { ROUTES, routesList } from './constants';
+import { routesList } from './constants';
 
 function CustomRouter() {
   const renderRoutes = () =>
@@ -12,7 +14,7 @@ function CustomRouter() {
     <Router>
       <Switch>
         {renderRoutes()}
-        <Redirect to={ROUTES.signUp} />
+        <Redirect to={PATHS.login} />
       </Switch>
     </Router>
   );

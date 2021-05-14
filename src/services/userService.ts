@@ -1,4 +1,9 @@
 import api from 'config/api';
-import { ApiError } from 'utils/types';
+import { Error, LoginValues, SignUpValues } from 'utils/types';
 
-export const signUp = <T>(data: T) => api.post<Response, ApiError>('/users', data);
+export const signUp = (data: SignUpValues) => api.post<Response, Error>('/users', data);
+
+export const login = (data: LoginValues) =>
+  api
+    .post<Response, Error>('/users/sign_in', data)
+    .then(response => ({ ...response.data, token: response.headers?.['access-token'] }));

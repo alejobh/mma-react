@@ -4,8 +4,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
+import { BrowserRouter } from 'react-router-dom';
 
-import Signup from './index';
+import Signup from 'screens/Signup';
 
 const queryClient = new QueryClient();
 
@@ -18,15 +19,22 @@ jest.mock('react-i18next', () => ({
 
 const mockHistoryPush = jest.fn();
 
-jest.mock('react-router-dom', () => ({
-  useHistory: () => ({ push: mockHistoryPush })
-}));
+jest.mock('react-router-dom', () => {
+  const routerDom = jest.requireActual('react-router-dom');
+
+  return {
+    ...routerDom,
+    useHistory: () => ({ push: mockHistoryPush })
+  };
+});
 
 describe('Signup screen', () => {
   beforeEach(() => {
     render(
       <QueryClientProvider client={queryClient}>
-        <Signup />
+        <BrowserRouter>
+          <Signup />
+        </BrowserRouter>
       </QueryClientProvider>
     );
   });
@@ -34,16 +42,16 @@ describe('Signup screen', () => {
   const fillForm = () => {
     userEvent.type(screen.getByLabelText('Signup:firstName'), 'test');
     userEvent.type(screen.getByLabelText('Signup:lastName'), 'test');
-    userEvent.type(screen.getByLabelText('common:email'), 'test@test.com');
-    userEvent.type(screen.getByLabelText('common:password'), 'test12');
+    userEvent.type(screen.getByLabelText('Common:email'), 'test@test.com');
+    userEvent.type(screen.getByLabelText('Common:password'), 'test12');
     userEvent.type(screen.getByLabelText('Signup:passwordConfirmation'), 'test12');
   };
 
   describe('Form with invalid input', () => {
     describe('Unfilled inputs', () => {
       test('Error message on submitting', async () => {
-        userEvent.click(screen.getByRole('button', { name: 'common:signup' }));
-        expect(await screen.findAllByText('common:requiredField')).not.toBe([]);
+        userEvent.click(screen.getByRole('button', { name: 'Common:signup' }));
+        expect(await screen.findAllByText('FormValidations:requiredField')).not.toBe([]);
       });
     });
 
@@ -53,27 +61,27 @@ describe('Signup screen', () => {
       });
 
       test('Error message on short password', async () => {
-        userEvent.type(screen.getByLabelText('common:password'), '{backspace}');
+        userEvent.type(screen.getByLabelText('Common:password'), '{backspace}');
         userEvent.type(screen.getByLabelText('Signup:passwordConfirmation'), '{backspace}');
-        userEvent.click(screen.getByRole('button', { name: 'common:signup' }));
-        expect(screen.getByLabelText('common:password')).toHaveValue('test1');
+        userEvent.click(screen.getByRole('button', { name: 'Common:signup' }));
+        expect(screen.getByLabelText('Common:password')).toHaveValue('test1');
         expect(screen.getByLabelText('Signup:passwordConfirmation')).toHaveValue('test1');
         expect(await screen.findByText('Signup:passwordLengthError')).toBeVisible();
       });
       test('Error message on confirmation not matching password', async () => {
         userEvent.type(screen.getByLabelText('Signup:passwordConfirmation'), '3');
-        userEvent.click(screen.getByRole('button', { name: 'common:signup' }));
-        expect(screen.getByLabelText('common:password')).toHaveValue('test12');
+        userEvent.click(screen.getByRole('button', { name: 'Common:signup' }));
+        expect(screen.getByLabelText('Common:password')).toHaveValue('test12');
         expect(screen.getByLabelText('Signup:passwordConfirmation')).toHaveValue('test123');
         expect(await screen.findByText('Signup:passwordConfirmationError')).toBeVisible();
       });
       test('Error message on invalid email', async () => {
-        const emailInput = screen.getByLabelText('common:email');
+        const emailInput = screen.getByLabelText('Common:email');
         emailInput.setSelectionRange(10, 13);
         userEvent.type(emailInput, '{backspace}');
-        userEvent.click(screen.getByRole('button', { name: 'common:signup' }));
+        userEvent.click(screen.getByRole('button', { name: 'Common:signup' }));
         expect(emailInput).toHaveValue('test@test.');
-        expect(await screen.findByText('Signup:emailError')).toBeVisible();
+        expect(await screen.findByText('FormValidations:emailError')).toBeVisible();
       });
     });
   });
@@ -101,7 +109,7 @@ describe('Signup screen', () => {
     });
 
     test('Submit successful', async () => {
-      userEvent.click(screen.getByRole('button', { name: 'common:signup' }));
+      userEvent.click(screen.getByRole('button', { name: 'Common:signup' }));
       await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledWith('/login'));
     });
 
@@ -111,8 +119,8 @@ describe('Signup screen', () => {
           res(ctx.status(STATUS_ERROR), ctx.json({ response: { data: { ok: false } } }))
         )
       );
-      userEvent.click(screen.getByRole('button', { name: 'common:signup' }));
-      expect(await screen.findByRole('button', { name: 'common:signup' })).toBeVisible();
+      userEvent.click(screen.getByRole('button', { name: 'Common:signup' }));
+      expect(await screen.findByRole('button', { name: 'Common:signup' })).toBeVisible();
       expect(await screen.findByText('Signup:submitError')).toBeVisible();
     });
   });

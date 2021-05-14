@@ -2,29 +2,22 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import logo from 'assets/logo.png';
+import PATHS from 'constants/paths';
 import Input from 'components/Input';
 import Loading from 'components/Spinner/components/loading';
+import { signUp } from 'services/userService';
 import {
   requiredValidation,
   emailValidation,
   passwordValidation,
   passwordConfirmationValidation
 } from 'utils/formValidations';
-import { signUp } from 'services/userService';
+import { SignUpValues } from 'utils/types';
 
 import styles from './styles.module.scss';
-
-export interface SignUpValues {
-  email: string;
-  firstName: string;
-  lastName: string;
-  locale: string;
-  password: string;
-  passwordConfirmation: string;
-}
 
 function Signup() {
   const { t } = useTranslation();
@@ -40,7 +33,7 @@ function Signup() {
   const { error, isLoading, mutate, reset } = useMutation((data: SignUpValues) => signUp(data), {
     onSuccess: () => {
       reset();
-      history.push('/login');
+      history.push(PATHS.login);
     }
   });
 
@@ -49,7 +42,7 @@ function Signup() {
   });
 
   return (
-    <div className="column center full-width">
+    <div className="column center">
       <div className={`column center full-width ${styles.container}`}>
         <img className={styles.logo} src={logo} alt="Wolox logo" />
         <div className={`column center full-width ${styles.containerForm}`}>
@@ -67,13 +60,13 @@ function Signup() {
               inputRef={register(requiredValidation(t))}
             />
             <Input
-              label={t('common:email')}
+              label={t('Common:email')}
               name="email"
               error={errors.email?.message}
               inputRef={register(emailValidation(t))}
             />
             <Input
-              label={t('common:password')}
+              label={t('Common:password')}
               name="password"
               type="password"
               error={errors.password?.message}
@@ -90,14 +83,14 @@ function Signup() {
               <Loading className="self-center" />
             ) : (
               <button className="btn" type="submit">
-                {t('common:signup')}
+                {t('Common:signup')}
               </button>
             )}
             {error && <span className={`text-error ${styles.submitMessage}`}>{t('Signup:submitError')}</span>}
           </form>
-          <button className="btn secondary" type="button">
-            {t('common:login')}
-          </button>
+          <Link className="btn secondary" to={PATHS.login}>
+            {t('Common:login')}
+          </Link>
         </div>
       </div>
     </div>
