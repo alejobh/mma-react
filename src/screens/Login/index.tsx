@@ -7,17 +7,14 @@ import { useMutation } from 'react-query';
 import logo from 'assets/logo.png';
 import Input from 'components/Input';
 import Loading from 'components/Spinner/components/loading';
-import { ROUTES } from 'components/Router/constants';
-import { Error } from 'config/apiTypes';
-import { requiredValidation, emailValidation } from 'utils/formValidations';
+import PATHS from 'constants/paths';
+import { LOCAL_STORAGE_KEYS, RESPONSE_STATUS } from 'constants/general';
+import LocalStorageService from 'services/LocalStorageService';
 import { login } from 'services/userService';
+import { requiredValidation, emailValidation } from 'utils/formValidations';
+import { LoginValues, Error } from 'utils/types';
 
 import styles from './styles.module.scss';
-
-interface LoginValues {
-  email: string;
-  password: string;
-}
 
 function Login() {
   const [errorStatus, setErrorStatus] = useState('');
@@ -32,11 +29,12 @@ function Login() {
 
   const { error, isLoading, mutate, reset } = useMutation((data: LoginValues) => login(data), {
     onSuccess: response => {
-      console.log(response);
-      history.push(ROUTES.home);
+      LocalStorageService.setValue(LOCAL_STORAGE_KEYS.session, response.token);
+      history.push(PATHS.home);
     },
     onError: (err: Error) => {
-      const errorMessage = err.status === 401 ? 'Login:invalidCredentials' : 'common:submitError';
+      const errorMessage =
+        err.status === RESPONSE_STATUS.unauthorized ? 'Login:invalidCredentials' : 'Common:submitError';
       setErrorStatus(errorMessage);
     }
   });
@@ -53,13 +51,13 @@ function Login() {
         <div className={`column center full-width ${styles.containerForm}`}>
           <form className={`column full-width ${styles.form}`} onSubmit={onSubmit}>
             <Input
-              label={t('common:email')}
+              label={t('Common:email')}
               name="email"
               error={errors.email?.message}
               inputRef={register(emailValidation(t))}
             />
             <Input
-              label={t('common:password')}
+              label={t('Common:password')}
               name="password"
               type="password"
               error={errors.password?.message}
@@ -69,13 +67,13 @@ function Login() {
               <Loading className="self-center" />
             ) : (
               <button className="btn" type="submit">
-                {t('common:login')}
+                {t('Common:login')}
               </button>
             )}
             {error && <span className={`text-error ${styles.submitMessage}`}>{t(errorStatus)}</span>}
           </form>
-          <Link className="btn secondary" to={ROUTES.signUp}>
-            {t('common:signup')}
+          <Link className="btn secondary" to={PATHS.signUp}>
+            {t('Common:signup')}
           </Link>
         </div>
       </div>

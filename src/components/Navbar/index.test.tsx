@@ -29,11 +29,11 @@ describe('Navbar Component', () => {
 
   test('Navbar renders correctly', () => {
     expect(screen.getByAltText('Wolox logo')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'common:logout' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Common:logout' })).toBeInTheDocument();
   });
 
   test('Session token removed and user redirect to login', () => {
-    userEvent.click(screen.getByRole('button', { name: 'common:logout' }));
+    userEvent.click(screen.getByRole('button', { name: 'Common:logout' }));
     expect(mockRemoveKey).toHaveBeenCalledWith('session');
     expect(mockHistoryPush).toHaveBeenCalledWith('/login');
   });

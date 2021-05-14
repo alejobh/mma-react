@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 import logo from 'assets/logo.png';
-import { ROUTES } from 'components/Router/constants';
+import PATHS from 'constants/paths';
+import { LOCAL_STORAGE_KEYS } from 'constants/general';
 import LocalStorageService from 'services/LocalStorageService';
 
 import styles from './styles.module.scss';
@@ -13,8 +14,8 @@ function Navbar() {
   const history = useHistory();
 
   const handleLogout = () => {
-    LocalStorageService.removeValue('session');
-    history.push(ROUTES.login);
+    LocalStorageService.removeValue(LOCAL_STORAGE_KEYS.session);
+    history.push(PATHS.login);
   };
 
   return (
@@ -22,7 +23,7 @@ function Navbar() {
       <div className={styles.navbarContent}>
         <img src={logo} alt="Wolox logo" />
         <button type="button" className={styles.logout} onClick={handleLogout}>
-          {t('common:logout')}
+          {t('Common:logout')}
         </button>
       </div>
     </div>

@@ -40,24 +40,24 @@ describe('Login screen', () => {
   });
 
   const fillForm = () => {
-    userEvent.type(screen.getByLabelText('common:email'), 'test@test.com');
-    userEvent.type(screen.getByLabelText('common:password'), 'test12');
+    userEvent.type(screen.getByLabelText('Common:email'), 'test@test.com');
+    userEvent.type(screen.getByLabelText('Common:password'), 'test12');
   };
 
   describe('Form with invalid input', () => {
     test('Error message on submitting', async () => {
-      userEvent.click(screen.getByRole('button', { name: 'common:login' }));
-      expect(await screen.findAllByText('common:requiredField')).not.toBe([]);
+      userEvent.click(screen.getByRole('button', { name: 'Common:login' }));
+      expect(await screen.findAllByText('FormValidations:requiredField')).not.toBe([]);
     });
 
     test('Error message on invalid email', async () => {
       fillForm();
-      const emailInput = screen.getByLabelText('common:email');
+      const emailInput = screen.getByLabelText('Common:email');
       emailInput.setSelectionRange(10, 13);
       userEvent.type(emailInput, '{backspace}');
-      userEvent.click(screen.getByRole('button', { name: 'common:login' }));
+      userEvent.click(screen.getByRole('button', { name: 'Common:login' }));
       expect(emailInput).toHaveValue('test@test.');
-      expect(await screen.findByText('common:emailError')).toBeVisible();
+      expect(await screen.findByText('FormValidations:emailError')).toBeVisible();
     });
   });
 
@@ -86,7 +86,7 @@ describe('Login screen', () => {
     });
 
     test('Submit successful', async () => {
-      userEvent.click(screen.getByRole('button', { name: 'common:login' }));
+      userEvent.click(screen.getByRole('button', { name: 'Common:login' }));
       await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledWith('/book-list'));
     });
 
@@ -97,16 +97,16 @@ describe('Login screen', () => {
         );
       test('Wrong credentials', async () => {
         server.use(failurePostMock(STATUS_UNAUTHORIZED));
-        userEvent.click(screen.getByRole('button', { name: 'common:login' }));
-        expect(await screen.findByRole('button', { name: 'common:login' })).toBeVisible();
+        userEvent.click(screen.getByRole('button', { name: 'Common:login' }));
+        expect(await screen.findByRole('button', { name: 'Common:login' })).toBeVisible();
         expect(await screen.findByText('Login:invalidCredentials')).toBeVisible();
       });
 
       test('Generic error', async () => {
         server.use(failurePostMock(STATUS_ERROR));
-        userEvent.click(screen.getByRole('button', { name: 'common:login' }));
-        expect(await screen.findByRole('button', { name: 'common:login' })).toBeVisible();
-        expect(await screen.findByText('common:submitError')).toBeVisible();
+        userEvent.click(screen.getByRole('button', { name: 'Common:login' }));
+        expect(await screen.findByRole('button', { name: 'Common:login' })).toBeVisible();
+        expect(await screen.findByText('Common:submitError')).toBeVisible();
       });
     });
   });
