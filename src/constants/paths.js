@@ -1,7 +1,8 @@
 const PATHS = {
   home: '/book-list',
   login: '/login',
-  signUp: '/signup'
+  signUp: '/signup',
+  bookDetail: '/book/:id'
 };
 
 export default PATHS;

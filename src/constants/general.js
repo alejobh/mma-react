@@ -5,5 +5,7 @@ export const RESPONSE_STATUS = {
 };
 
 export const LOCAL_STORAGE_KEYS = {
-  session: 'session'
+  client: 'client',
+  session: 'session',
+  uid: 'uid'
 };
