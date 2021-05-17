@@ -1,17 +1,16 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import Dashboard from 'components/Dashboard';
-import { LOCAL_STORAGE_KEYS } from 'constants/general';
+import { useSelector } from 'contexts/userContext';
 import PATHS from 'constants/paths';
-import LocalStorageService from 'services/LocalStorageService';
+import Dashboard from 'components/Dashboard';
 
 interface CustomRouteProps {
   isPrivate?: boolean;
 }
 
 function CustomRoute({ path, isPrivate, ...props }: RouteProps & CustomRouteProps) {
-  const userAuthenticated = LocalStorageService.getValue(LOCAL_STORAGE_KEYS.session);
+  const userAuthenticated = useSelector(context => context.session?.uid);
 
   if (userAuthenticated) {
     return isPrivate ? <Dashboard /> : <Redirect to={PATHS.home} />;

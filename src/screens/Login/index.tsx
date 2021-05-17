@@ -10,6 +10,7 @@ import Loading from 'components/Spinner/components/loading';
 import api from 'config/api';
 import PATHS from 'constants/paths';
 import { LOCAL_STORAGE_KEYS, RESPONSE_STATUS } from 'constants/general';
+import { useDispatch, actionCreators } from 'contexts/userContext';
 import LocalStorageService from 'services/LocalStorageService';
 import { login } from 'services/userService';
 import { requiredValidation, emailValidation } from 'utils/formValidations';
@@ -21,6 +22,7 @@ function Login() {
   const [errorStatus, setErrorStatus] = useState('');
   const { t } = useTranslation();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -30,6 +32,7 @@ function Login() {
 
   const { error, isLoading, mutate, reset } = useMutation((data: LoginValues) => login(data), {
     onSuccess: ({ client, token, uid }) => {
+      dispatch(actionCreators.setUid(uid || ''));
       LocalStorageService.setValue(LOCAL_STORAGE_KEYS.client, client);
       LocalStorageService.setValue(LOCAL_STORAGE_KEYS.session, token);
       LocalStorageService.setValue(LOCAL_STORAGE_KEYS.uid, uid);
