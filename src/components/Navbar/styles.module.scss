@@ -3,18 +3,11 @@
 .navbar-container {
   border-top: 6px solid $wolox-blue;
   box-shadow: 0 4px 10px 0 $shadow-box;
-  display: flex;
   height: 70px;
-  justify-content: center;
-  width: 100%;
 
   .navbar-content {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
     max-width: 900px;
     padding: 0 11px;
-    width: 100%;
 
     .logout {
       font-size: 18px;

@@ -14,13 +14,15 @@ function Navbar() {
   const history = useHistory();
 
   const handleLogout = () => {
+    LocalStorageService.removeValue(LOCAL_STORAGE_KEYS.client);
     LocalStorageService.removeValue(LOCAL_STORAGE_KEYS.session);
+    LocalStorageService.removeValue(LOCAL_STORAGE_KEYS.uid);
     history.push(PATHS.login);
   };
 
   return (
-    <div className={styles.navbarContainer}>
-      <div className={styles.navbarContent}>
+    <div className={`row center full-width ${styles.navbarContainer}`}>
+      <div className={`row middle space-between full-width ${styles.navbarContent}`}>
         <img src={logo} alt="Wolox logo" />
         <button type="button" className={styles.logout} onClick={handleLogout}>
           {t('Common:logout')}
