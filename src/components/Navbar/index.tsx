@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import logo from 'assets/logo.png';
 import PATHS from 'constants/paths';
-import { LOCAL_STORAGE_KEYS } from 'constants/general';
+import apiUtils from 'config/api/utils';
 import LocalStorageService from 'services/LocalStorageService';
 
 import styles from './styles.module.scss';
@@ -14,9 +14,8 @@ function Navbar() {
   const history = useHistory();
 
   const handleLogout = () => {
-    LocalStorageService.removeValue(LOCAL_STORAGE_KEYS.client);
-    LocalStorageService.removeValue(LOCAL_STORAGE_KEYS.session);
-    LocalStorageService.removeValue(LOCAL_STORAGE_KEYS.uid);
+    LocalStorageService.removeAuthHeaders();
+    apiUtils.removeHeaders();
     history.push(PATHS.login);
   };
 

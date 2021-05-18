@@ -5,12 +5,12 @@ import PATHS from 'constants/paths';
 import { routesList } from 'components/Router/constants';
 import Navbar from 'components/Navbar';
 
-function Dashboard() {
-  const renderRoutes = () =>
-    routesList
-      .filter(route => route.private)
-      .map(route => <Route key={route.path} component={route.component} />);
+const renderRoutes = () =>
+  routesList
+    .filter(route => route.private)
+    .map(route => <Route key={route.path} path={route.path} component={route.component} />);
 
+function Dashboard() {
   return (
     <Router>
       <Navbar />

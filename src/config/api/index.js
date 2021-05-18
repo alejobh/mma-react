@@ -49,13 +49,12 @@ api.addRequestTransform(request => {
   }
 });
 
-
 api.addResponseTransform(response => {
   if (response.ok) {
     response.data = camelCase.serialize(response.data);
   } else {
     throw { errors: response.data.errors, status: response.status };
   }
-})
+});
 
 export default api;
