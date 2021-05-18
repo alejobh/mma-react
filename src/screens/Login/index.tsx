@@ -7,9 +7,9 @@ import { useMutation } from 'react-query';
 import logo from 'assets/logo.png';
 import Input from 'components/Input';
 import Loading from 'components/Spinner/components/loading';
-import api from 'config/api';
+import { setHeaders } from 'config/api/utils';
 import PATHS from 'constants/paths';
-import { LOCAL_STORAGE_KEYS, RESPONSE_STATUS } from 'constants/general';
+import { RESPONSE_STATUS } from 'constants/general';
 import { useDispatch, actionCreators } from 'contexts/userContext';
 import LocalStorageService from 'services/LocalStorageService';
 import { login } from 'services/userService';
@@ -31,16 +31,10 @@ function Login() {
   } = useForm<LoginValues>();
 
   const { error, isLoading, mutate, reset } = useMutation((data: LoginValues) => login(data), {
-    onSuccess: ({ client, token, uid }) => {
-      dispatch(actionCreators.setUid(uid || ''));
-      LocalStorageService.setValue(LOCAL_STORAGE_KEYS.client, client);
-      LocalStorageService.setValue(LOCAL_STORAGE_KEYS.session, token);
-      LocalStorageService.setValue(LOCAL_STORAGE_KEYS.uid, uid);
-      api.setHeaders({
-        'access-token': token || '',
-        client: client || '',
-        uid: uid || ''
-      });
+    onSuccess: ({ client = '', token = '', uid = '' }) => {
+      dispatch(actionCreators.setUid(uid));
+      LocalStorageService.setAuthHeaders({ client, token, uid });
+      setHeaders({ client, token, uid });
       history.push(PATHS.home);
     },
     onError: (err: Error) => {
