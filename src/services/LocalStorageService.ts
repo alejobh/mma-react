@@ -1,10 +1,5 @@
 import { LOCAL_STORAGE_KEYS } from 'constants/general';
-
-interface Headers {
-  client?: string;
-  token?: string;
-  uid?: string;
-}
+import { Headers } from 'utils/types';
 
 type Storage = { [index: string]: string | undefined };
 const tempStorage: Storage = {};

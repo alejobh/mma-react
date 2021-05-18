@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import logo from 'assets/logo.png';
 import PATHS from 'constants/paths';
-import apiUtils from 'config/api/utils';
+import { removeHeaders } from 'config/api/utils';
 import LocalStorageService from 'services/LocalStorageService';
 
 import styles from './styles.module.scss';
@@ -15,7 +15,7 @@ function Navbar() {
 
   const handleLogout = () => {
     LocalStorageService.removeAuthHeaders();
-    apiUtils.removeHeaders();
+    removeHeaders();
     history.push(PATHS.login);
   };
 

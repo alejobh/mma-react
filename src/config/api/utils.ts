@@ -1,8 +1,10 @@
+import { Headers } from 'utils/types';
+
 import api from '.';
 
 const baseHeaders = ['Accept', 'Content-Type'];
 
-const removeHeaders = () => {
+export const removeHeaders = () => {
   Object.keys(api.headers).forEach(header => {
     if (!baseHeaders.includes(header)) {
       api.deleteHeader(header);
@@ -10,13 +12,10 @@ const removeHeaders = () => {
   });
 };
 
-const setHeaders = (headers: Record<string, string>) => {
-  api.setHeaders(headers);
+export const setHeaders = (headers: Headers) => {
+  api.setHeaders({
+    'access-token': headers.token || '',
+    client: headers.client || '',
+    uid: headers.uid || ''
+  });
 };
-
-const apiUtils = {
-  removeHeaders,
-  setHeaders
-};
-
-export default apiUtils;
