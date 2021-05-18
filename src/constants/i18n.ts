@@ -5,6 +5,7 @@ i18next.addResources('es', 'Common', {
   signup: 'Sign Up',
   password: 'Password',
   login: 'Login',
+  logout: 'Logout',
   submitError: 'Error procesando su solicitud'
 });
 

@@ -16,5 +16,10 @@ export const routesList = [
   {
     component: Login,
     path: PATHS.login
+  },
+  {
+    component: Home,
+    path: PATHS.bookDetail,
+    private: true
   }
 ];

@@ -7,8 +7,9 @@ import { useMutation } from 'react-query';
 import logo from 'assets/logo.png';
 import Input from 'components/Input';
 import Loading from 'components/Spinner/components/loading';
+import { setHeaders } from 'config/api/utils';
 import PATHS from 'constants/paths';
-import { LOCAL_STORAGE_KEYS, RESPONSE_STATUS } from 'constants/general';
+import { RESPONSE_STATUS } from 'constants/general';
 import LocalStorageService from 'services/LocalStorageService';
 import { login } from 'services/userService';
 import { requiredValidation, emailValidation } from 'utils/formValidations';
@@ -28,8 +29,9 @@ function Login() {
   } = useForm<LoginValues>();
 
   const { error, isLoading, mutate, reset } = useMutation((data: LoginValues) => login(data), {
-    onSuccess: response => {
-      LocalStorageService.setValue(LOCAL_STORAGE_KEYS.session, response.token);
+    onSuccess: ({ client = '', token = '', uid = '' }) => {
+      LocalStorageService.setAuthHeaders({ client, token, uid });
+      setHeaders({ client, token, uid });
       history.push(PATHS.home);
     },
     onError: (err: Error) => {

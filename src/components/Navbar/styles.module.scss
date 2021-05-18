@@ -1,0 +1,17 @@
+@import 'scss/variables/_colors';
+
+.navbar-container {
+  border-top: 6px solid $wolox-blue;
+  box-shadow: 0 4px 10px 0 $shadow-box;
+  height: 70px;
+
+  .navbar-content {
+    max-width: 900px;
+    padding: 0 11px;
+
+    .logout {
+      font-size: 18px;
+      color: $black;
+    }
+  }
+}
