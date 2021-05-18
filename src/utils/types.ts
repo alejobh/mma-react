@@ -20,7 +20,7 @@ export interface SignUpValues {
 }
 
 export interface Headers {
-  client?: string;
-  token?: string;
-  uid?: string;
+  client: string;
+  token: string;
+  uid: string;
 }

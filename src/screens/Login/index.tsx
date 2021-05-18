@@ -29,7 +29,7 @@ function Login() {
   } = useForm<LoginValues>();
 
   const { error, isLoading, mutate, reset } = useMutation((data: LoginValues) => login(data), {
-    onSuccess: ({ client, token, uid }) => {
+    onSuccess: ({ client = '', token = '', uid = '' }) => {
       LocalStorageService.setAuthHeaders({ client, token, uid });
       setHeaders({ client, token, uid });
       history.push(PATHS.home);
