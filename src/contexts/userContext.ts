@@ -1,19 +1,13 @@
-import { contextFactory } from 'config/context';
-import LocalStorageService from 'services/LocalStorageService';
+import { contextFactory } from 'config/context/context';
 import { LOCAL_STORAGE_KEYS } from 'constants/general';
+import LocalStorageService from 'services/LocalStorageService';
 
-interface Session {
+export interface UserState {
   uid: string;
 }
 
-export interface UserState {
-  session?: Session;
-}
-
 export const INITIAL_STATE = {
-  session: {
-    uid: LocalStorageService.getValue(LOCAL_STORAGE_KEYS.uid)
-  }
+  uid: LocalStorageService.getValue(LOCAL_STORAGE_KEYS.uid)
 };
 
 enum ActionTypes {
@@ -43,10 +37,10 @@ export const actionCreators = {
 export const reducer = (state: UserState, action: Action): UserState => {
   switch (action.type) {
     case ActionTypes.SET_UID: {
-      return { ...state, session: { uid: action.payload } };
+      return { ...state, uid: action.payload };
     }
     case ActionTypes.REMOVE_UID: {
-      return { ...state, session: { uid: '' } };
+      return { ...state, uid: '' };
     }
     default: {
       return state;

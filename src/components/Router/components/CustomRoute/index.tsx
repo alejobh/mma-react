@@ -10,7 +10,7 @@ interface CustomRouteProps {
 }
 
 function CustomRoute({ path, isPrivate, ...props }: RouteProps & CustomRouteProps) {
-  const userAuthenticated = useSelector(context => context.session?.uid);
+  const userAuthenticated = useSelector(context => context.uid);
 
   if (userAuthenticated) {
     return isPrivate ? <Dashboard /> : <Redirect to={PATHS.home} />;
