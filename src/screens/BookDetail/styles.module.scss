@@ -1,0 +1,74 @@
+@import 'scss/variables/_colors';
+
+.container {
+  padding-top: 46px;
+  background-color: $wild-sand;
+  height: 100vh;
+}
+
+.content {
+  max-width: 900px;
+}
+
+.return-button {
+  color: $black;
+  font-size: 20px;
+  line-height: 24px;
+  margin-bottom: 110px;
+
+  &::before {
+    content: url('../../assets/back-arrow.png');
+    height: 20px;
+    margin-right: 12px;
+    width: 20px;
+  }
+}
+
+.details-container {
+  background-color: $white;
+  padding: 24px;
+  box-shadow: 4px 4px 10px 0 $shadow-box;
+}
+
+.cover {
+  height: 368px;
+  width: 261px;
+  margin-right: 52px;
+}
+
+.details-header {
+  border-bottom: 4px solid $wolox-green;
+  padding-bottom: 12px;
+
+  .title {
+    color: $black;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38px;
+    margin-right: 8px;
+  }
+
+  .genre {
+    color: $gray-darker;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28px;
+  }
+}
+
+.details-side {
+  height: 178px;
+}
+
+.detail-item {
+  color: $black;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+
+  .info {
+    color: $gray-darker;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}

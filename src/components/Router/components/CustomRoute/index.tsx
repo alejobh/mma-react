@@ -9,7 +9,7 @@ interface CustomRouteProps {
   isPrivate?: boolean;
 }
 
-function CustomRoute({ path, isPrivate, ...props }: RouteProps & CustomRouteProps) {
+function CustomRoute({ path, isPrivate, exact, ...props }: RouteProps & CustomRouteProps) {
   const userAuthenticated = useSelector(context => context.uid);
 
   if (userAuthenticated) {
