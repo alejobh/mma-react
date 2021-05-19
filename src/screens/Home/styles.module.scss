@@ -1,36 +1,24 @@
 @import 'scss/variables/_colors';
 
-.app-logo {
-  animation: app-logo-spin infinite 20s linear;
-  height: 40vmin;
-  margin-bottom: 40px;
+.container {
+  padding-top: 32px;
 }
 
-.app-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.book-list-container {
+  gap: 36px;
+  max-width: 900px;
+  width: 100%;
 }
 
-.text {
-  font-size: calc(10px + 2vmin);
-  margin-bottom: calc(30px + 2vmin);
-  color: $black;
-}
+.book-container {
+  background-color: $white;
+  box-shadow: 4px 4px 10px 0 $shadow-box;
+  height: 300px;
+  padding: 28px;
+  width: 198px;
 
-.app-link {
-  font-size: calc(10px + 2vmin);
-  color: #61DAFB;
-  text-decoration: underline;
-}
-
-@keyframes app-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
+  .book-cover {
+    width: 142px;
+    height: 200px;
   }
 }

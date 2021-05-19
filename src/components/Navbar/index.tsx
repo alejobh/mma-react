@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import logo from 'assets/logo.png';
 import PATHS from 'constants/paths';
+import { useDispatch, actionCreators } from 'contexts/userContext';
 import { removeHeaders } from 'config/api/utils';
 import LocalStorageService from 'services/LocalStorageService';
 
@@ -12,8 +13,10 @@ import styles from './styles.module.scss';
 function Navbar() {
   const { t } = useTranslation();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
+    dispatch(actionCreators.removeUid());
     LocalStorageService.removeAuthHeaders();
     removeHeaders();
     history.push(PATHS.login);

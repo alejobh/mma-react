@@ -1,16 +1,60 @@
-import React from 'react';
-import i18next from 'i18next';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
 
-import logo from './assets/logo.svg';
+import defaultCover from 'assets/book-cover.png';
+import { getBookList } from 'services/bookService';
+
 import styles from './styles.module.scss';
 
+interface BookInfo {
+  author: string;
+  createdAt: string;
+  editor: string;
+  genre: string;
+  id: number;
+  imageUrl: string;
+  title: string;
+  updatedAt: string;
+  year: string;
+}
+
+interface Books {
+  count: number;
+  currentPage: number;
+  nextPage?: number;
+  page: BookInfo[];
+  totalCount: number;
+  totalPages: number;
+}
+
 function Home() {
+  const [books, setBooks] = useState<BookInfo[]>([]);
+  const { t } = useTranslation();
+  const { error, isLoading } = useQuery('books', getBookList, {
+    onSuccess: (bookList: Books) => {
+      setBooks(bookList.page);
+    }
+  });
+
+  const renderBooks = () =>
+    books.map(book => (
+      <div key={book.title} className={`column center space-between ${styles.bookContainer}`}>
+        <img
+          className={styles.bookCover}
+          src={book.imageUrl || defaultCover}
+          alt={t('Home:bookCover', { title: book.title })}
+        />
+        <div>
+          <p>{book.title}</p>
+          <p>{book.author}</p>
+        </div>
+      </div>
+    ));
+
   return (
-    <div className={styles.app}>
-      <header className={styles.appHeader}>
-        <img src={logo} className={styles.appLogo} alt={i18next.t('Home:logoAlt') as string} />
-        <p className={styles.text}>{i18next.t('Home:welcome')}</p>
-      </header>
+    <div className={`row center full-width ${styles.container}`}>
+      <div className={`row wrap ${styles.bookListContainer}`}>{renderBooks()}</div>
     </div>
   );
 }
