@@ -6,7 +6,8 @@ i18next.addResources('es', 'Common', {
   password: 'Password',
   login: 'Login',
   logout: 'Logout',
-  submitError: 'Error procesando su solicitud'
+  submitError: 'Error procesando su solicitud',
+  back: 'Atrás'
 });
 
 i18next.addResources('es', 'FormValidations', {

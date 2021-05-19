@@ -1,3 +1,4 @@
+import BookDetail from 'screens/BookDetail';
 import Signup from 'screens/Signup';
 import Home from 'screens/Home';
 import Login from 'screens/Login';
@@ -10,6 +11,7 @@ export const routesList = [
   },
   {
     component: Home,
+    exact: true,
     path: PATHS.home,
     private: true
   },
@@ -18,7 +20,8 @@ export const routesList = [
     path: PATHS.login
   },
   {
-    component: Home,
+    component: BookDetail,
+    exact: true,
     path: PATHS.bookDetail,
     private: true
   }

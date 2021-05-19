@@ -14,11 +14,19 @@
   background-color: $white;
   box-shadow: 4px 4px 10px 0 $shadow-box;
   height: 300px;
-  padding: 28px;
+  padding: 28px 28px 20px;
+  cursor: pointer;
   width: 198px;
 
   .book-cover {
     width: 142px;
     height: 200px;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 18px;
+    color: $black;
   }
 }

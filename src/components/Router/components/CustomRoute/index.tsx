@@ -9,13 +9,13 @@ interface CustomRouteProps {
   isPrivate?: boolean;
 }
 
-function CustomRoute({ path, isPrivate, ...props }: RouteProps & CustomRouteProps) {
+function CustomRoute({ path, isPrivate, exact, ...props }: RouteProps & CustomRouteProps) {
   const userAuthenticated = useSelector(context => context.uid);
 
   if (userAuthenticated) {
     return isPrivate ? <Dashboard /> : <Redirect to={PATHS.home} />;
   }
-  return isPrivate ? <Redirect to={PATHS.login} /> : <Route path={path} {...props} />;
+  return isPrivate ? <Redirect to={PATHS.login} /> : <Route path={path} exact={exact} {...props} />;
 }
 
 export default CustomRoute;
