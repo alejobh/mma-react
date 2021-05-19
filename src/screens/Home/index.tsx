@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 
 import defaultCover from 'assets/book-cover.png';
-
 import { getBookList } from 'services/bookService';
 
 import styles from './styles.module.scss';
@@ -31,6 +30,7 @@ interface Books {
 
 function Home() {
   const [books, setBooks] = useState<BookInfo[]>([]);
+  const { t } = useTranslation();
   const { error, isLoading } = useQuery('books', getBookList, {
     onSuccess: (bookList: Books) => {
       setBooks(bookList.page);
@@ -40,7 +40,11 @@ function Home() {
   const renderBooks = () =>
     books.map(book => (
       <div key={book.title} className={`column center space-between ${styles.bookContainer}`}>
-        <img className={styles.bookCover} src={book.imageUrl || defaultCover} alt={`Tapa ${book.title}`} />
+        <img
+          className={styles.bookCover}
+          src={book.imageUrl || defaultCover}
+          alt={t('Home:bookCover', { title: book.title })}
+        />
         <div>
           <p>{book.title}</p>
           <p>{book.author}</p>

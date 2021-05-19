@@ -1,7 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-import api from 'config/api';
+import { setHeaders } from 'config/api/utils';
 import CustomRouter from 'components/Router';
 import withProvider from 'components/ProviderWrapper';
 import { LOCAL_STORAGE_KEYS } from 'constants/general';
@@ -11,9 +11,9 @@ import LocalStorageService from 'services/LocalStorageService';
 
 const queryClient = new QueryClient();
 
-api.setHeaders({
+setHeaders({
   client: LocalStorageService.getValue(LOCAL_STORAGE_KEYS.client),
-  'access-token': LocalStorageService.getValue(LOCAL_STORAGE_KEYS.session),
+  token: LocalStorageService.getValue(LOCAL_STORAGE_KEYS.session),
   uid: LocalStorageService.getValue(LOCAL_STORAGE_KEYS.uid)
 });
 
