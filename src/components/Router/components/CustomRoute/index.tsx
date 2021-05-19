@@ -15,7 +15,7 @@ function CustomRoute({ path, isPrivate, ...props }: RouteProps & CustomRouteProp
   if (userAuthenticated) {
     return isPrivate ? <Dashboard /> : <Redirect to={PATHS.home} />;
   }
-  return isPrivate ? <Redirect to={PATHS.login} /> : <Route path={path} {...props} />;
+  return isPrivate ? <Redirect to={PATHS.login} /> : <Route path={path} exact={exact} {...props} />;
 }
 
 export default CustomRoute;

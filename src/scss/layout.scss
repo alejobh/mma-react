@@ -22,6 +22,10 @@
     justify-content: space-around;
   }
 
+  &.space-evenly {
+    justify-content: space-evenly;
+  }
+
   &.start {
     align-items: flex-start;
   }

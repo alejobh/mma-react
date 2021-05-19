@@ -16,7 +16,7 @@ function Dashboard() {
       <Navbar />
       <Switch>
         {renderRoutes()}
-        <Redirect to={PATHS.login} />
+        <Redirect to={PATHS.home} />
       </Switch>
     </Router>
   );

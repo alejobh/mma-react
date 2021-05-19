@@ -87,7 +87,7 @@ describe('Login screen', () => {
 
     test('Submit successful', async () => {
       userEvent.click(screen.getByRole('button', { name: 'Common:login' }));
-      await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledWith('/book-list'));
+      await waitFor(() => expect(mockHistoryPush).toHaveBeenCalledWith('/books'));
     });
 
     describe('Submit wrong credentials failed', () => {
