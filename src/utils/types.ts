@@ -18,3 +18,9 @@ export interface SignUpValues {
   password: string;
   passwordConfirmation: string;
 }
+
+export interface Headers {
+  client: string;
+  token: string;
+  uid: string;
+}

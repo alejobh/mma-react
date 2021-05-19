@@ -1,3 +1,6 @@
+import { LOCAL_STORAGE_KEYS } from 'constants/general';
+import { Headers } from 'utils/types';
+
 type Storage = { [index: string]: string | undefined };
 const tempStorage: Storage = {};
 
@@ -38,10 +41,25 @@ const removeValue = (key: string) => {
   }
 };
 
+const setAuthHeaders = (headers: Headers) => {
+  const { client, token, uid } = headers;
+  setValue(LOCAL_STORAGE_KEYS.client, client);
+  setValue(LOCAL_STORAGE_KEYS.session, token);
+  setValue(LOCAL_STORAGE_KEYS.uid, uid);
+};
+
+const removeAuthHeaders = () => {
+  removeValue(LOCAL_STORAGE_KEYS.client);
+  removeValue(LOCAL_STORAGE_KEYS.session);
+  removeValue(LOCAL_STORAGE_KEYS.uid);
+};
+
 const LocalStorageService = {
   getValue,
   setValue,
-  removeValue
+  removeValue,
+  setAuthHeaders,
+  removeAuthHeaders
 };
 
 export default LocalStorageService;
